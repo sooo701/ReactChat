@@ -104,3 +104,5 @@ router.post('/logout', (req, res) => {
 router.post('/changeName', (req, res) => {
   res.json({success : true});
 });
+
+export default router;
