@@ -8,10 +8,12 @@ router.post('/rooms', (req, res) => {
   // 처음 멤버로 집어넣는다.
   let username = req.session.username;
   let maxMember = req.body.maxMember;
+  let roomName = req.body.roomName;
   let userlist = {username};
-  Room.create({username, maxMember, userlist}, (err, room) => {
+
+  Room.create({roomName:roomName, maxMember:maxMember, userList:userlist}, (err, room) => {
     if (err) throw err;
-    res.json({success : success});
+    res.json({success : true});
   });
 });
 // 방정보 가져오기
@@ -39,7 +41,7 @@ router.post('/enterRoom', (req, res) => {
     // 방의 최대 인원수가 현재 있는 사람보다 많다면
     // 목록에 사람을 추가하고 save해준다.
 
-    if (room.maxNumber > room.userList.length) {
+    if (room.maxMember > room.userList.length) {
       room.userList = {username};
 
       room.save((err) => {
@@ -49,7 +51,6 @@ router.post('/enterRoom', (req, res) => {
     }
 
   });
-  res.json({success : true});
 });
 
 // 방 떠나기
