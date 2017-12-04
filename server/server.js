@@ -4,19 +4,13 @@
 
 import express from 'express';
 import socket from 'socket.io';
+import http from 'http';
 const port = 3000;
 const app = express();
-const server = app.listen(port, function (err) {
-    if (err) {
-        console.log(err);
-    }
-    else {
-        open('http://localhost:${port}');
-    }
-});
-
+const server = http.Server(app);
 const io = socket(server);
-
+let users = [];
+let sockets = {};
 
 
 // connection이라는 command가 들어오면 수행
@@ -33,6 +27,7 @@ io.on('connection', (socket) => {
 
     });
 
+    // 연결종료
     socket.on('disconnect', () => {
         console.log(socket.username + 'is disconnected.');
     });
@@ -40,4 +35,8 @@ io.on('connection', (socket) => {
 
 
     
+});
+
+server.listen(port, () => {
+   console.log('[INFO] Listening on ' + port) ;
 });
