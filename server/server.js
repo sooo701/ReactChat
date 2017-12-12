@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
    });
 
     // 채팅방에 채팅 전송
-    socket.on('sendChatToRoom', (data) => {
+    socket.on('sendChatToRoom', (data) => {''
        var roomInfo = room[data.roomNum];
        var sendData = {
            chat : data.chat,
